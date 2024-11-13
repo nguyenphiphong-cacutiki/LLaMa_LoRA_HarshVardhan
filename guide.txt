@@ -1,0 +1,2 @@
++ command run_inference_multiple_gpu: torchrun --nproc_per_node=NUM_GPUS_YOU_HAVE your_script.py
++ train with single gpu:  CUDA_VISIBLE_DEVICES=0 python main.py
