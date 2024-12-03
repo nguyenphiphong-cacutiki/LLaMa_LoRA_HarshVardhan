@@ -71,35 +71,7 @@ logging.set_verbosity(logging.CRITICAL)
 prompt_path = "/mnt/md1/check_point_text_recognition/ckpt_chatbot/prompt_for_test.txt"
 
 prompt = '''
-Hãy trả lời câu hỏi dựa trên các tài liệu được cung cấp. nếu bạn thấy tài liệu không liên quan đến câu hỏi thì chỉ cần trả lời 'Không có thông tin về câu hỏi này trong tài liệu được cung cấp'.
-
-Các tài liệu:
-
-Tài liệu 1:
-Điều 2. Khối lượng kiến thức Học phần Tiếng Anh tăng cường
-
-Học phần Tiếng Anh tăng cường (TC) là học phần Tiếng Anh bổ trợ giúp sinh viên đạt ngưỡng tối thiểu trước khi bắt đầu học các học phần Tiếng Anh trong chương trình đào tạo. Tổng khối lượng học phần Tiếng Anh tăng cường là 6 tín chỉ.
-
-Tài liệu 2:
-QUY ĐỊNH
-
-KHỐI LƯỢNG VÀ TỔ CHỨC ĐÀO TẠO HỌC PHẦN TIẾNG ANH TĂNG CƯỜNG
-
-(Ban hành kèm theo Quyết định số: 1767 /QĐ-ĐHTL ngày 29 tháng 08 năm 2019 của Hiệu trưởng Trường Đại học Thủy lợi)
-
-Điều 1. Phạm vi điều chỉnh và đối tượng áp dụng
-
-1. Văn bản này quy định về tổ chức, quản lý học phần Tiếng Anh tăng cường áp dụng đối với sinh viên trình độ Đại học hệ chính quy kể từ khóa tuyển sinh năm 2019 hoặc tuyển sinh Khóa trước 2019 nhưng học theo chương trình của Khóa tuyển sinh 2019 trở về sau.
-
-2. Những sinh viên được nêu ở khoản 1 điều 1 có điểm thi môn Tiếng Anh THPT dưới 4 (< 4 điểm) sẽ thuộc diện bắt buộc tham gia các lớp học Tiếng Anh tăng cường do nhà trường tổ chức; các đối tượng còn lại cũng có thể đăng kí học nếu có nhu cầu.
-
-3. Sinh viên có chứng chỉ ngoại ngữ theo quy định tại Điều 3 của quy định này được miễn học Học phần Tiếng Anh tăng cường và được đăng ký học Học phần Tiếng Anh bắt buộc trong chương trình đào tạo.
-
- 
-
-
-Câu hỏi:
-Mục đích của học phần Tiếng Anh tăng cường là gì?
+How to train a LLM model
 '''
 pipe = pipeline(task="text-generation", model=base_model, tokenizer=tokenizer, max_length=2048)
 while True:
