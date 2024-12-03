@@ -68,7 +68,8 @@ logging.set_verbosity(logging.CRITICAL)
 # 5. Run text generation pipeline with our next model
 # prompt = "How can I learn to optimize my webpage for search engines?"
 
-prompt = ""
+prompt_path = "/mnt/md1/check_point_text_recognition/ckpt_chatbot/prompt_for_test.txt"
+
 prompt = '''
 Hãy trả lời câu hỏi dựa trên các tài liệu được cung cấp. nếu bạn thấy tài liệu không liên quan đến câu hỏi thì chỉ cần trả lời 'Không có thông tin về câu hỏi này trong tài liệu được cung cấp'.
 
@@ -102,15 +103,16 @@ Mục đích của học phần Tiếng Anh tăng cường là gì?
 '''
 pipe = pipeline(task="text-generation", model=base_model, tokenizer=tokenizer, max_length=2048)
 while True:
-    # prompt = input("Type your question: ")
-    if prompt != 'exit':
+    prompt = input("Type your question: ")
+    if prompt != '0':
+        with open(prompt_path, 'r') as file:
+            text = file.read().strip()
         start = time.time()
-        result = pipe(f"<s>[INST] {prompt} [/INST]")
+        result = pipe(f"<s>[INST] {text} [/INST]")
         result = result[0]['generated_text']
         answer = result.split('[/INST]')[1].split('</s>')[0].strip()
         print('Answer:', answer)
         print('time:', time.time() - start)
-        break
     else:
         print('Xin cảm ơn!')
         exit(0)
