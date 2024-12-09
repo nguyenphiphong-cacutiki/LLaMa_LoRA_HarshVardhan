@@ -18,7 +18,7 @@ use_nested_quant = False
 #output directory where the model predictions and checkpoints will be stored
 import datetime
 day = datetime.datetime.now().strftime('%y%m%d')
-output_dir = f"/mnt/md1/check_point_text_recognition/ckpt_chatbot/{day}"
+output_dir = f"/mnt/md1/check_point_text_recognition/ckpt_chatbot/{day}_llama7bchathf"
 if not os.path.exists(output_dir):
     os.mkdir(output_dir)
 new_model = os.path.join(output_dir, "Llama-2-7b-chat-finetune-qlora")
