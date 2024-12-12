@@ -2,7 +2,7 @@ import os
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 # 2. Model and Dataset Configuration
-model_name = "NousResearch/Llama-2-7b-chat-hf"
+model_name = "llm4fun/vietrag-7b-v1.0"
 # dataset_name = "mlabonne/guanaco-llama2-1k"
 # 3. QLoRA parameters
 lora_r = 32 #lora attention dimension/ rank
@@ -18,11 +18,16 @@ use_nested_quant = False
 #output directory where the model predictions and checkpoints will be stored
 import datetime
 day = datetime.datetime.now().strftime('%y%m%d')
-output_dir = f"/mnt/md1/check_point_text_recognition/ckpt_chatbot/{day}_llama7bchathf"
+
+output_dir = f"/mnt/md1/check_point_text_recognition/ckpt_chatbot/{day}_vietrag7b"
+if os.environ.get('IS_DOCKER') is not None:
+    output_dir = f'/app/output/{day}_vietrag7b'
 if not os.path.exists(output_dir):
     os.mkdir(output_dir)
-new_model = os.path.join(output_dir, "Llama-2-7b-chat-finetune-qlora")
-data_path = '/mnt/md1/check_point_text_recognition/data_chatbot/data_llama_7b_chat_hf_time_241202-190841.json'
+new_model = os.path.join(output_dir, "ckpt_end_training")
+data_path = '/mnt/md1/check_point_text_recognition/data_chatbot/data_vietrag7b_time_241204-084854.json'
+if os.environ.get('IS_DOCKER') is not None:
+    data_path = '/app/data/data_vietrag7b_time_241204-084854.json'
 
 #number of training epochs
 num_train_epochs = 5
