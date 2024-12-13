@@ -2,7 +2,7 @@
 import os
 import torch
 from datasets import load_dataset
-import config_train as cfg
+import config_llama as cfg
 from transformers import ( 
     AutoTokenizer, 
     AutoModelForCausalLM,
@@ -139,11 +139,6 @@ merged yet unless you explicitly do so using something like model.merge_and_unlo
 # Ignore warnings
 logging.set_verbosity(logging.CRITICAL)
 
-# Run text generation pipeline with our next model
-prompt = "How can I learn to optimize my webpage for search engines?"
-pipe = pipeline(task="text-generation", model=model, tokenizer=tokenizer, max_length=200)
-result = pipe(f"<s>[INST] {prompt} [/INST]")
-print(result[0]['generated_text'])
 
 # 11. Store New Llama2 Model
 # Reload model in FP16 and merge it with LoRA weights

@@ -16,7 +16,7 @@ from peft import LoraConfig, PeftModel
 import torch.distributed as dist
 from torch.nn.parallel import DistributedDataParallel as DDP
 from accelerate import Accelerator
-import config_train as cfg
+import config_llama as cfg
 
 accelerator = Accelerator()
 

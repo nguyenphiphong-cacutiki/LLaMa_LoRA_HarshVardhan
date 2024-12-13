@@ -2,7 +2,7 @@
 import os
 import torch
 from datasets import load_dataset
-import config_train as cfg
+import config_vietrag as cfg
 from transformers import ( 
     AutoTokenizer, 
     AutoModelForCausalLM,

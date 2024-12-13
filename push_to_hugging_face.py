@@ -9,7 +9,7 @@ from transformers import (
 from peft import LoraConfig, PeftModel
 import torch.distributed as dist
 from accelerate import Accelerator
-import config_train as cfg
+import config_vietrag as cfg
 from huggingface_hub import upload_folder
 
 accelerator = Accelerator()
