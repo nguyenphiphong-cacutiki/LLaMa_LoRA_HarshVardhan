@@ -22,9 +22,10 @@ accelerator = Accelerator()
 
 # 2. Model and Dataset Configuration
 model_name = cfg.model_name
-# new_model = "Llama-2-7b-chat-finetune-qlora"
 # new_model = "/mnt/md1/check_point_text_recognition/ckpt_chatbot/checkpoint-53390"
-new_model = "/mnt/md1/check_point_text_recognition/ckpt_chatbot/241202/checkpoint-2700"
+new_model = "/mnt/md1/check_point_text_recognition/ckpt_chatbot/241202_llama7bchathf/checkpoint-2700"
+if os.environ.get('IS_DOCKER') is not None:
+    new_model = os.path.join('/app/output', '241202_llama7bchathf/checkpoint-2700')
 # device_map = {"":0}
 
 # 3. Tokenizer and PEFT configuration
@@ -65,26 +66,29 @@ model, tokenizer = accelerator.prepare(model, tokenizer) #Wrap model and tokeniz
 # Ignore warnings
 logging.set_verbosity(logging.CRITICAL)
 
-# 5. Run text generation pipeline with our next model
-# prompt = "How can I learn to optimize my webpage for search engines?"
 
-prompt_path = "/mnt/md1/check_point_text_recognition/ckpt_chatbot/prompt_for_test.txt"
-
-prompt = '''
-How to train a LLM model
-'''
 pipe = pipeline(task="text-generation", model=base_model, tokenizer=tokenizer, max_length=2048)
-while True:
-    prompt = input("Type your question: ")
-    if prompt != '0':
-        with open(prompt_path, 'r') as file:
-            text = file.read().strip()
-        start = time.time()
-        result = pipe(f"<s>[INST] {text} [/INST]")
-        result = result[0]['generated_text']
-        answer = result.split('[/INST]')[1].split('</s>')[0].strip()
-        print('Answer:', answer)
-        print('time:', time.time() - start)
-    else:
-        print('Xin cảm ơn!')
-        exit(0)
+
+def generate(prompt):
+    result = pipe(f"<s>[INST] {prompt} [/INST]")
+    result = result[0]['generated_text']
+    answer = result.split('[/INST]')[1].split('</s>')[0].strip()
+    return answer
+
+if __name__ == '__main___':
+    prompt_path = "/mnt/md1/check_point_text_recognition/ckpt_chatbot/prompt_for_test.txt"
+
+    while True:
+        prompt = input("Type your question: ")
+        if prompt != '0':
+            with open(prompt_path, 'r') as file:
+                text = file.read().strip()
+            start = time.time()
+            result = pipe(f"<s>[INST] {text} [/INST]")
+            result = result[0]['generated_text']
+            answer = result.split('[/INST]')[1].split('</s>')[0].strip()
+            print('Answer:', answer)
+            print('time:', time.time() - start)
+        else:
+            print('Xin cảm ơn!')
+            exit(0)
