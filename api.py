@@ -31,4 +31,4 @@ def handle_post():
 
 # Chạy Flask app
 if __name__ == '__main__':
-    app.run(post=5000, debug=False)
+    app.run(port=5000, debug=False)
