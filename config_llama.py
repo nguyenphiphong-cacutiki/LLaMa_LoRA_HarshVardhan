@@ -10,7 +10,8 @@ lora_alpha = 8 #lora scaling parameter
 lora_dropout = 0.1 #lora dropout probability
 # 4. BitsAndBytes Configuration
 use_4bit = True
-bnb_4bit_compute_dtype = "float16"
+# bnb_4bit_compute_dtype = "float16"
+bnb_4bit_compute_dtype = "bfloat16"
 bnb_4bit_quant_type = "nf4"
 use_nested_quant = False
 
@@ -25,7 +26,7 @@ if os.environ.get('IS_DOCKER') is not None:
 if not os.path.exists(output_dir):
     os.mkdir(output_dir)
 new_model = os.path.join(output_dir, "ckpt_end_training")
-data_path = '/mnt/md1/check_point_text_recognition/data_chatbot/data_llama_7b_chat_hf_time_241204-084932.json'
+data_path = '/mnt/md1/check_point_text_recognition/data_chatbot/data_llama_7b_chat_hf_time_241216-104433.json'
 if os.environ.get('IS_DOCKER') is not None:
     data_path = '/app/data/data_llama_7b_chat_hf_time_241204-084932.json'
 

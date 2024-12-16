@@ -75,9 +75,8 @@ def generate(prompt):
     answer = result.split('[/INST]')[1].split('</s>')[0].strip()
     return answer
 
-if __name__ == '__main___':
+if __name__ == '__main__':
     prompt_path = "/mnt/md1/check_point_text_recognition/ckpt_chatbot/prompt_for_test.txt"
-
     while True:
         prompt = input("Type your question: ")
         if prompt != '0':

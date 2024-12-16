@@ -10,7 +10,7 @@ def count_token(text):
     return len(tokens)
 
 if __name__ == '__main__':
-    data_path = '/mnt/md1/check_point_text_recognition/data_chatbot/data_llama_7b_chat_hf_time_241202-190841.json'
+    data_path = '/mnt/md1/check_point_text_recognition/data_chatbot/data_llama_7b_chat_hf_time_241216-104433.json'
     with open(data_path, 'r', encoding='utf-8') as json_file:
         data = json.load(json_file)
         print('len of data:', len(data))
