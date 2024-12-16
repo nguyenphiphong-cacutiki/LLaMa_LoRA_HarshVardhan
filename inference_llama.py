@@ -80,10 +80,10 @@ if __name__ == '__main__':
     while True:
         prompt = input("Type your question: ")
         if prompt != '0':
-            with open(prompt_path, 'r') as file:
-                text = file.read().strip()
+            # with open(prompt_path, 'r') as file:
+            #     text = file.read().strip()
             start = time.time()
-            result = pipe(f"<s>[INST] {text} [/INST]")
+            result = pipe(f"<s>[INST] {prompt} [/INST]")
             result = result[0]['generated_text']
             answer = result.split('[/INST]')[1].split('</s>')[0].strip()
             print('Answer:', answer)

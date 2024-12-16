@@ -81,7 +81,7 @@ logging_steps = 100
 
 # 6. SFT parameters
 #maximum sequence length to use
-max_seq_length = 4096
+max_seq_length = 2048
 
 packing = False
 save_total_limit=3

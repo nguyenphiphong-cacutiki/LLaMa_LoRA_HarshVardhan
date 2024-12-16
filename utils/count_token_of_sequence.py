@@ -2,12 +2,18 @@ from transformers import AutoTokenizer
 import json
 
 
-model_name = "NousResearch/Llama-2-7b-chat-hf"
-tokenizer = AutoTokenizer.from_pretrained(model_name)
+model_name_llama = "NousResearch/Llama-2-7b-chat-hf"
+tokenizer_llama = AutoTokenizer.from_pretrained(model_name_llama)
 
-def count_token(text):
-    tokens = tokenizer.encode(text)
-    return len(tokens)
+tokenizer_vietrag = AutoTokenizer.from_pretrained('llm4fun/vietrag-7b-v1.0', trust_remote_code = True)
+
+def count_token(text, model='llama'):
+    if model == 'llama':
+        tokens = tokenizer_llama.encode(text)
+        return len(tokens)
+    elif model == 'vietrag':
+        tokens = tokenizer_vietrag.encode(text)
+        return len(tokens)
 
 if __name__ == '__main__':
     data_path = '/mnt/md1/check_point_text_recognition/data_chatbot/data_llama_7b_chat_hf_time_241216-104433.json'
@@ -24,15 +30,13 @@ if __name__ == '__main__':
             num = count_token(data_point['text'])
             if num > 3072:
                 num_greater_than_3072 += 1
-            elif num > 2048:
+            if num > 2048:
                 num_greater_than_2048 += 1
-            elif num > 1536:
+            if num > 1536:
                 num_greater_than_1536 += 1
-            elif num > 1024:
+            if num > 1024:
                 num_greater_than_1024 += 1
-            else:
-                num_other += 1
-            
+   
             
         print('num data point have token > 1024:', num_greater_than_1024)
         print('num data point have token > 1536:', num_greater_than_1536)

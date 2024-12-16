@@ -1,11 +1,12 @@
 
 import json
 import os
+from utils.data_preprocessing import custom_load_dataset
+import config_llama as cfg
 
-data_path = '/mnt/md1/check_point_text_recognition/data_chatbot/data_vietrag7b_time_241204-084854.json'
-with open(data_path, 'r', encoding='utf-8') as json_file:
-    data = json.load(json_file)
-    for i, item in enumerate(data):
-        if i % 20 == 0:
-            print(item['text'])
-            print()
+train_dataset, val_dataset, test_dataset = custom_load_dataset(data_path=cfg.data_path, max_seq_length=cfg.max_seq_length)
+print(test_dataset)
+for example in test_dataset.select(range(5)):
+    print(type(example))
+for example in test_dataset['text']:  # In 5 mẫu đầu tiên của cột 'text'
+    print(example)

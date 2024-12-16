@@ -20,11 +20,17 @@ from utils.data_preprocessing import custom_load_dataset
 #load dataset
 # dataset = load_dataset(dataset_name,split = "train")
 # dataset = load_dataset('json', data_files=cfg.data_path, split="train")
-dataset = custom_load_dataset(data_path=cfg.data_path, max_seq_length=cfg.max_seq_length)
 
-train_val_split = dataset.train_test_split(test_size=0.2, seed=42)
-train_dataset = train_val_split['train'].shuffle(seed=42)
-val_dataset = train_val_split['test'].shuffle(seed=42)
+# dataset = custom_load_dataset(data_path=cfg.data_path, max_seq_length=cfg.max_seq_length)
+
+# train_val_split = dataset.train_test_split(test_size=0.25, seed=42)
+# train_dataset = train_val_split['train'].shuffle(seed=42)
+
+# val_test_dataset = train_val_split['test'].train_test_split(test_size=0.2, seed=42)
+# val_dataset = val_test_dataset['train'].shuffle(seed=42)
+# test_dataset = val_test_dataset['test'].shuffle(seed=42)
+
+train_dataset, val_dataset, test_dataset = custom_load_dataset(data_path=cfg.data_path, max_seq_length=cfg.max_seq_length)
 
 #load tokenizer and model with QLoRA config
 compute_dtype = getattr(torch, cfg.bnb_4bit_compute_dtype)
