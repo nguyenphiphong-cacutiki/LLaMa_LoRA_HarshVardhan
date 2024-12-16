@@ -23,7 +23,7 @@ accelerator = Accelerator()
 # 2. Model and Dataset Configuration
 model_name = cfg.model_name
 # new_model = "/mnt/md1/check_point_text_recognition/ckpt_chatbot/checkpoint-53390"
-new_model = "/mnt/md1/check_point_text_recognition/ckpt_chatbot/241202_llama7bchathf/checkpoint-2700"
+new_model = "/mnt/md1/check_point_text_recognition/ckpt_chatbot/241216_llama7b/ckpt_end_training"
 if os.environ.get('IS_DOCKER') is not None:
     new_model = os.path.join('/app/output', '241202_llama7bchathf/checkpoint-2700')
 # device_map = {"":0}
@@ -67,7 +67,7 @@ model, tokenizer = accelerator.prepare(model, tokenizer) #Wrap model and tokeniz
 logging.set_verbosity(logging.CRITICAL)
 
 
-pipe = pipeline(task="text-generation", model=base_model, tokenizer=tokenizer, max_length=2048)
+pipe = pipeline(task="text-generation", model=base_model, tokenizer=tokenizer, max_length=cfg.max_seq_length)
 
 def generate(prompt):
     result = pipe(f"<s>[INST] {prompt} [/INST]")
@@ -75,19 +75,41 @@ def generate(prompt):
     answer = result.split('[/INST]')[1].split('</s>')[0].strip()
     return answer
 
+
+def direct_inference(load_file=False, prompt=""):
+    if load_file:
+        prompt_path = "/mnt/md1/check_point_text_recognition/ckpt_chatbot/prompt_for_test.txt"
+        while True:
+            prompt = input("Type your question: ")
+            if prompt != '0':
+                with open(prompt_path, 'r') as file:
+                    text = file.read().strip()
+                start = time.time()
+                result = pipe(f"<s>[INST] {text} [/INST]")
+                result = result[0]['generated_text']
+                answer = result.split('[/INST]')[1].split('</s>')[0].strip()
+                print('Answer:', answer)
+                print('time:', time.time() - start)
+            else:
+                print('Xin cảm ơn!')
+                exit(0)
+    else:
+        result = pipe(prompt)
+        result = result[0]['generated_text']
+        answer = result.split('[/INST]')[1].split('</s>')[0].strip()
+        return answer
+
+def make_a_file_compare():
+    from utils.data_preprocessing import custom_load_dataset
+
+    save_path = 'hello.json'
+    train_dataset, val_dataset, test_dataset = custom_load_dataset(data_path=cfg.data_path, max_seq_length=cfg.max_seq_length)
+    with open(save_path, 'r', encoding='utf-8'):
+        for example in test_dataset['text']:  
+            prompt = example.split('[/INST]')[0] + ['/INST']
+            anwser = example.split('[/INST]')[1].replace('</s>', '')
+            finetune_res = direct_inference(prompt=prompt)
+
+
 if __name__ == '__main__':
-    prompt_path = "/mnt/md1/check_point_text_recognition/ckpt_chatbot/prompt_for_test.txt"
-    while True:
-        prompt = input("Type your question: ")
-        if prompt != '0':
-            # with open(prompt_path, 'r') as file:
-            #     text = file.read().strip()
-            start = time.time()
-            result = pipe(f"<s>[INST] {prompt} [/INST]")
-            result = result[0]['generated_text']
-            answer = result.split('[/INST]')[1].split('</s>')[0].strip()
-            print('Answer:', answer)
-            print('time:', time.time() - start)
-        else:
-            print('Xin cảm ơn!')
-            exit(0)
+    make_a_file_compare()

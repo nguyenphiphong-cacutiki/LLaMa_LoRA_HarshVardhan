@@ -26,7 +26,7 @@ if os.environ.get('IS_DOCKER') is not None:
 if not os.path.exists(output_dir):
     os.mkdir(output_dir)
 new_model = os.path.join(output_dir, "ckpt_end_training")
-data_path = '/mnt/md1/check_point_text_recognition/data_chatbot/data_llama_7b_chat_hf_time_241216-104433.json'
+data_path = '/mnt/md1/check_point_text_recognition/data_chatbot/data_llama_7b_chat_hf_time_241216-145514.json'
 if os.environ.get('IS_DOCKER') is not None:
     data_path = '/app/data/data_llama_7b_chat_hf_time_241204-084932.json'
 

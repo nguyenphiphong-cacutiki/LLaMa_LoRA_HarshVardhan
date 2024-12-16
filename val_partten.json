@@ -1,0 +1,15 @@
+[
+    {
+        "prompt": "",
+        "answer": "",
+        "base": {
+            "response": "...",
+            "score": ""
+        },
+        "fine-tuning": {
+            "response": "...",
+            "score": ""
+        }
+    }
+]
+
