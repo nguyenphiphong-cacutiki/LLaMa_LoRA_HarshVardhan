@@ -15,7 +15,7 @@ def count_token(text, model='llama'):
         tokens = tokenizer_vietrag.encode(text)
         return len(tokens)
 
-if __name__ == '__main__':
+def count_token_of_data():
     data_path = '/mnt/md1/check_point_text_recognition/data_chatbot/data_llama_7b_chat_hf_time_241216-145514.json'
     with open(data_path, 'r', encoding='utf-8') as json_file:
         data = json.load(json_file)
@@ -44,3 +44,13 @@ if __name__ == '__main__':
         print('num data point have token > 3072:', num_greater_than_3072)
         print('num data point other:', num_other)
         print('check sum: ', num_greater_than_1024+num_greater_than_1536+num_greater_than_2048+num_greater_than_3072+num_other)
+
+def count_token_of_a_file():
+    txt_path = '/mnt/md1/check_point_text_recognition/ckpt_chatbot/prompt_for_test.txt'
+    with open(txt_path, 'r') as file:
+        text = file.read()
+    print('text:')
+    print(text)
+    print(f'num of token: {count_token(text=text)}')
+if __name__ == '__main__':
+    count_token_of_a_file()
