@@ -146,5 +146,5 @@ def make_a_file_compare_step_2():
 
 
 if __name__ == '__main__':
-    # direct_inference(load_file=True)
-    make_a_file_compare_step_2()
+    direct_inference(load_file=True)
+    # make_a_file_compare_step_2()
