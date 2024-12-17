@@ -69,7 +69,7 @@ logging.set_verbosity(logging.CRITICAL)
 
 # pipe = pipeline(task="text-generation", model=model, tokenizer=tokenizer, max_length=cfg.max_seq_length)
 # pipe = pipeline(task="text-generation", model=model, tokenizer=tokenizer, max_length=5400)
-pipe = pipeline(task="text-generation", model=base_model, tokenizer=tokenizer, max_new_tokens=1024)
+pipe = pipeline(task="text-generation", model=model, tokenizer=tokenizer, max_new_tokens=1024)
 
 def generate(prompt):
     result = pipe(f"<s>[INST] {prompt} [/INST]")
@@ -147,4 +147,4 @@ def make_a_file_compare_step_2():
 
 if __name__ == '__main__':
     # direct_inference(load_file=True)
-    make_a_file_compare_step_1()
+    make_a_file_compare_step_2()
