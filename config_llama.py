@@ -5,7 +5,7 @@ os.environ["TOKENIZERS_PARALLELISM"] = "false"
 model_name = "NousResearch/Llama-2-7b-chat-hf"
 # dataset_name = "mlabonne/guanaco-llama2-1k"
 # 3. QLoRA parameters
-lora_r = 32 #lora attention dimension/ rank
+lora_r = 64 #lora attention dimension/ rank
 lora_alpha = 8 #lora scaling parameter
 lora_dropout = 0.1 #lora dropout probability
 # 4. BitsAndBytes Configuration
@@ -81,7 +81,7 @@ logging_steps = 100
 
 # 6. SFT parameters
 #maximum sequence length to use
-max_seq_length = 2048
+max_seq_length = 2400
 
 packing = False
 save_total_limit=3
