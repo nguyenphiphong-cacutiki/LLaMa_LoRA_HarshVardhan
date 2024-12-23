@@ -5,7 +5,7 @@ os.environ["TOKENIZERS_PARALLELISM"] = "false"
 model_name = "NousResearch/Llama-2-7b-chat-hf"
 # dataset_name = "mlabonne/guanaco-llama2-1k"
 # 3. QLoRA parameters
-lora_r = 128 #lora attention dimension/ rank
+lora_r = 256 #lora attention dimension/ rank
 lora_alpha = 32 #lora scaling parameter
 lora_dropout = 0.1 #lora dropout probability
 # 4. BitsAndBytes Configuration
@@ -26,7 +26,7 @@ if os.environ.get('IS_DOCKER') is not None:
 if not os.path.exists(output_dir):
     os.mkdir(output_dir)
 new_model = os.path.join(output_dir, "ckpt_end_training")
-data_path = '/mnt/md1/check_point_text_recognition/data_chatbot/qa_data_llama/llama_qa_data_241223-163342_train.json'
+data_path = '/mnt/md1/check_point_text_recognition/data_chatbot/qa_data_llama/llama_qa_data_241223-230924_train.json'
 if os.environ.get('IS_DOCKER') is not None:
     data_path = '/app/data/data_llama_7b_chat_hf_time_241204-084932.json'
 
