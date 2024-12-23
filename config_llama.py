@@ -5,8 +5,8 @@ os.environ["TOKENIZERS_PARALLELISM"] = "false"
 model_name = "NousResearch/Llama-2-7b-chat-hf"
 # dataset_name = "mlabonne/guanaco-llama2-1k"
 # 3. QLoRA parameters
-lora_r = 64 #lora attention dimension/ rank
-lora_alpha = 8 #lora scaling parameter
+lora_r = 128 #lora attention dimension/ rank
+lora_alpha = 32 #lora scaling parameter
 lora_dropout = 0.1 #lora dropout probability
 # 4. BitsAndBytes Configuration
 use_4bit = True
@@ -26,12 +26,12 @@ if os.environ.get('IS_DOCKER') is not None:
 if not os.path.exists(output_dir):
     os.mkdir(output_dir)
 new_model = os.path.join(output_dir, "ckpt_end_training")
-data_path = '/mnt/md1/check_point_text_recognition/data_chatbot/data_llama_7b_chat_hf_time_241216-145514.json'
+data_path = '/mnt/md1/check_point_text_recognition/data_chatbot/qa_data_llama/llama_qa_data_241223-163342_train.json'
 if os.environ.get('IS_DOCKER') is not None:
     data_path = '/app/data/data_llama_7b_chat_hf_time_241204-084932.json'
 
 #number of training epochs
-num_train_epochs = 5
+num_train_epochs = 10
 
 #enable fp16/bf16 training (set bf16 to True when using A100 GPU in google colab)
 fp16 = True
@@ -81,7 +81,7 @@ logging_steps = 100
 
 # 6. SFT parameters
 #maximum sequence length to use
-max_seq_length = 2400
+max_seq_length = 1024
 
 packing = False
 save_total_limit=3

@@ -16,7 +16,7 @@ def count_token(text, model='llama'):
         return len(tokens)
 
 def count_token_of_data():
-    data_path = '/mnt/md1/check_point_text_recognition/data_chatbot/data_llama_7b_chat_hf_time_241216-145514.json'
+    data_path = '/mnt/md1/check_point_text_recognition/data_chatbot/qa_data_llama/llama_qa_data_241223-163342_val.json'
     with open(data_path, 'r', encoding='utf-8') as json_file:
         data = json.load(json_file)
         print('len of data:', len(data))
@@ -53,4 +53,5 @@ def count_token_of_a_file():
     print(text)
     print(f'num of token: {count_token(text=text)}')
 if __name__ == '__main__':
-    count_token_of_a_file()
+    # count_token_of_a_file()
+    count_token_of_data()
