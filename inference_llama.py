@@ -69,7 +69,7 @@ logging.set_verbosity(logging.CRITICAL)
 
 # pipe = pipeline(task="text-generation", model=model, tokenizer=tokenizer, max_length=cfg.max_seq_length)
 # pipe = pipeline(task="text-generation", model=model, tokenizer=tokenizer, max_length=5400)
-pipe = pipeline(task="text-generation", model=model, tokenizer=tokenizer, max_new_tokens=1024)
+pipe = pipeline(task="text-generation", model=model, tokenizer=tokenizer, max_length=1024)
 
 def generate(prompt):
     result = pipe(f"<s>[INST] {prompt} [/INST]")
