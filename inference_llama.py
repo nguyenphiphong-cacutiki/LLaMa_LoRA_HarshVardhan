@@ -23,7 +23,7 @@ accelerator = Accelerator()
 # 2. Model and Dataset Configuration
 model_name = cfg.model_name
 # new_model = "/mnt/md1/check_point_text_recognition/ckpt_chatbot/checkpoint-53390"
-new_model = "/mnt/md1/check_point_text_recognition/ckpt_chatbot/241216_llama7b/ckpt_end_training"
+new_model = "/mnt/md1/check_point_text_recognition/ckpt_chatbot/241223_llama7b/ckpt_end_training"
 if os.environ.get('IS_DOCKER') is not None:
     new_model = os.path.join('/app/output', '241202_llama7bchathf/checkpoint-2700')
 # device_map = {"":0}
@@ -98,7 +98,7 @@ def direct_inference(load_file=False, prompt=""):
                 print('Xin cảm ơn!')
                 exit(0)
     else:
-        result = pipe(prompt, temperature=0.1)
+        result = pipe(prompt, temperature=0)
         result = result[0]['generated_text']
         answer = result.split('[/INST]')[1].split('</s>')[0].strip()
         return answer
@@ -146,5 +146,6 @@ def make_a_file_compare_step_2():
 
 
 if __name__ == '__main__':
-    direct_inference(load_file=True)
+    # direct_inference(load_file=True)
+    direct_inference(load_file=False)
     # make_a_file_compare_step_2()
