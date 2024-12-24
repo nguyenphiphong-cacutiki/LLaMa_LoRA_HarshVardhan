@@ -98,7 +98,7 @@ def direct_inference(load_file=False, prompt=""):
                 print('Xin cảm ơn!')
                 exit(0)
     else:
-        result = pipe(prompt, temperature=0)
+        result = pipe(prompt)
         result = result[0]['generated_text']
         answer = result.split('[/INST]')[1].split('</s>')[0].strip()
         return answer
@@ -144,8 +144,19 @@ def make_a_file_compare_step_2():
     with open(save_path, 'w', encoding='utf-8') as json_file:
         json.dump(data, json_file, ensure_ascii=False)
 
-
+def chat():
+    while True:
+        prompt = input("Type your question: ")
+        if prompt != '0':
+            start = time.time()
+            answer = generate(prompt)
+            print('Answer:', answer)
+            print('time:', time.time() - start)
+        else:
+            print('Xin cảm ơn!')
+            exit(0)
 if __name__ == '__main__':
     # direct_inference(load_file=True)
-    direct_inference(load_file=False)
+    # direct_inference(load_file=False)
+    chat()
     # make_a_file_compare_step_2()
