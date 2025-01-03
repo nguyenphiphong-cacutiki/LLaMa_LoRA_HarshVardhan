@@ -16,11 +16,19 @@ def handle_post():
         return jsonify({'error': 'No data provided'}), 400
 
     # Giả sử chúng ta chỉ muốn nhận và trả về một số trường trong JSON
-    prompt = data.get('prompt')
+    question = data.get('question')
+    context = data.get('context')
 
-    if not prompt:
+    if not question or not context:
         return jsonify({'error': 'Prompt and model are required'}), 400
-    answer = ''
+    prompt = f'''
+Hãy trả lời câu hỏi ở cuối dựa vào các tài liệu được cung cấp.
+
+{context}
+
+câu hỏi: 
+{question}
+'''
     answer = generate(prompt=prompt)
 
     # Xử lý dữ liệu và trả lại kết quả (trong ví dụ này là chỉ trả về lại dữ liệu nhận được)

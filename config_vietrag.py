@@ -5,8 +5,8 @@ os.environ["TOKENIZERS_PARALLELISM"] = "false"
 model_name = "llm4fun/vietrag-7b-v1.0"
 # dataset_name = "mlabonne/guanaco-llama2-1k"
 # 3. QLoRA parameters
-lora_r = 32 #lora attention dimension/ rank
-lora_alpha = 8 #lora scaling parameter
+lora_r = 64 #lora attention dimension/ rank
+lora_alpha = 16 #lora scaling parameter
 lora_dropout = 0.1 #lora dropout probability
 # 4. BitsAndBytes Configuration
 use_4bit = True
@@ -20,12 +20,16 @@ import datetime
 day = datetime.datetime.now().strftime('%y%m%d')
 
 output_dir = f"/mnt/md1/check_point_text_recognition/ckpt_chatbot/{day}_vietrag7b"
+
 if os.environ.get('IS_DOCKER') is not None:
     output_dir = f'/app/output/{day}_vietrag7b'
+
 if not os.path.exists(output_dir):
     os.mkdir(output_dir)
 new_model = os.path.join(output_dir, "ckpt_end_training")
-data_path = '/mnt/md1/check_point_text_recognition/data_chatbot/data_vietrag7b_time_241204-084854.json'
+
+data_file_path = '/mnt/md1/check_point_text_recognition/data_chatbot/data_vietrag7b_time_250102-103703.json'
+
 if os.environ.get('IS_DOCKER') is not None:
     data_path = '/app/data/data_vietrag7b_time_241204-084854.json'
 
@@ -35,6 +39,9 @@ num_train_epochs = 5
 #enable fp16/bf16 training (set bf16 to True when using A100 GPU in google colab)
 fp16 = True
 bf16 = False
+
+# Enable gradient checkpointing
+# gradient_checkpointing = True
 
 #batch size per GPU for training
 per_device_train_batch_size = 1
@@ -80,6 +87,7 @@ logging_steps = 100
 
 # 6. SFT parameters
 #maximum sequence length to use
+# max_seq_length = 2048
 max_seq_length = 1536
 
 packing = False

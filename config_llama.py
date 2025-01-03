@@ -20,7 +20,7 @@ use_nested_quant = False
 import datetime
 day = datetime.datetime.now().strftime('%y%m%d')
 
-output_dir = f"/mnt/md1/check_point_text_recognition/ckpt_chatbot/{day}_llama7b"
+output_dir = f"/mnt/md1/check_point_text_recognition/ckpt_chatbot/{day}_llama7b_2"
 if os.environ.get('IS_DOCKER') is not None:
     output_dir = f'/app/output/{day}_llama7b'
 if not os.path.exists(output_dir):

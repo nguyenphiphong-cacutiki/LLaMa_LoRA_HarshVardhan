@@ -54,4 +54,4 @@ def count_token_of_a_file():
     print(f'num of token: {count_token(text=text)}')
 if __name__ == '__main__':
     # count_token_of_a_file()
-    count_token_of_data()
+    count_token_of_a_file()

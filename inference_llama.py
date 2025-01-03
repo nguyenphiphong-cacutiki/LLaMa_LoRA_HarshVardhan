@@ -23,7 +23,7 @@ accelerator = Accelerator()
 # 2. Model and Dataset Configuration
 model_name = cfg.model_name
 # new_model = "/mnt/md1/check_point_text_recognition/ckpt_chatbot/checkpoint-53390"
-new_model = "/mnt/md1/check_point_text_recognition/ckpt_chatbot/241223_llama7b/ckpt_end_training"
+new_model = "/mnt/md1/check_point_text_recognition/ckpt_chatbot/241224_llama7b_2/ckpt_end_training"
 if os.environ.get('IS_DOCKER') is not None:
     new_model = os.path.join('/app/output', '241202_llama7bchathf/checkpoint-2700')
 # device_map = {"":0}
@@ -69,7 +69,7 @@ logging.set_verbosity(logging.CRITICAL)
 
 # pipe = pipeline(task="text-generation", model=model, tokenizer=tokenizer, max_length=cfg.max_seq_length)
 # pipe = pipeline(task="text-generation", model=model, tokenizer=tokenizer, max_length=5400)
-pipe = pipeline(task="text-generation", model=model, tokenizer=tokenizer, max_length=1024)
+pipe = pipeline(task="text-generation", model=base_model, tokenizer=tokenizer, max_length=2048)
 
 def generate(prompt):
     result = pipe(f"<s>[INST] {prompt} [/INST]")

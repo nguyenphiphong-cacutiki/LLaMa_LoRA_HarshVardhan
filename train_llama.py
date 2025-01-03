@@ -30,8 +30,8 @@ from utils.data_preprocessing import custom_load_dataset
 # val_dataset = val_test_dataset['train'].shuffle(seed=42)
 # test_dataset = val_test_dataset['test'].shuffle(seed=42)
 
-train_file = '/mnt/md1/check_point_text_recognition/data_chatbot/qa_data_llama/llama_qa_data_241223-230924_train.json'
-val_file = '/mnt/md1/check_point_text_recognition/data_chatbot/qa_data_llama/llama_qa_data_241223-230924_val.json'
+train_file = '/mnt/md1/check_point_text_recognition/data_chatbot/qa_data_llama/llama_qa_data_241224-180254_train.json'
+val_file = '/mnt/md1/check_point_text_recognition/data_chatbot/qa_data_llama/llama_qa_data_241224-180254_val.json'
 # train_dataset, val_dataset, test_dataset = custom_load_dataset(data_path=cfg.data_path, max_seq_length=10000)
 train_dataset = load_dataset("json", data_files=train_file,split='train')
 train_dataset = train_dataset.shuffle(seed=42)

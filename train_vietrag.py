@@ -15,16 +15,14 @@ from transformers import (
     )
 from peft import LoraConfig, PeftModel
 from trl import SFTTrainer, SFTConfig
-from utils.data_preprocessing import custom_load_dataset
+from utils.data_preprocessing import custom_load_dataset, custom_load_dataset2
 # 7. Load Dataset and Model
 #load dataset
-# dataset = load_dataset(dataset_name,split = "train")
-# dataset = load_dataset('json', data_files=cfg.data_path, split="train")
-dataset = custom_load_dataset(data_path=cfg.data_path, max_seq_length=cfg.max_seq_length)
+# train_dataset, val_dataset, test_dataset = custom_load_dataset(data_path=cfg.data_path, max_seq_length=cfg.max_seq_length, model='vietrag')
 
-train_val_split = dataset.train_test_split(test_size=0.2, seed=42)
-train_dataset = train_val_split['train'].shuffle(seed=42)
-val_dataset = train_val_split['test'].shuffle(seed=42)
+
+train_dataset, val_dataset, test_dataset = custom_load_dataset2(save_dir=cfg.output_dir, data_path=cfg.data_file_path,
+                                                                 max_seq_length=cfg.max_seq_length, model='vietrag')
 
 #load tokenizer and model with QLoRA config
 compute_dtype = getattr(torch, cfg.bnb_4bit_compute_dtype)
@@ -98,7 +96,12 @@ training_arguments = TrainingArguments(
     # add some config
     dataloader_num_workers=1, # Increase the number of workers to increase IO performance if there are multiple GPUs
     local_rank=-1, # Hugging Face Provides Multi-GPU Distribution via Trainer
+
+    # enble gradient_checkpointing
+    # gradient_checkpointing = cfg.gradient_checkpointing
 )
+
+# model.gradient_checkpointing_enable()
 
 #SFT Trainer
 trainer = SFTTrainer(
