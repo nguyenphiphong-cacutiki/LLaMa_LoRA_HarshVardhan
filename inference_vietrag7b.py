@@ -25,7 +25,7 @@ model = PeftModel.from_pretrained(base_model, lora_checkpoint_path)
 # Step 3: Merge the LoRA weights with the base model
 model = model.merge_and_unload()
 # Đặt mô hình vào chế độ đánh giá
-model.eval()
+base_model.eval()
 # Đảm bảo mô hình sử dụng GPU nếu có
 device = "cuda" if torch.cuda.is_available() else "cpu"
 # model.to(device)
@@ -61,7 +61,7 @@ def generate(question, context, max_new_tokens=620):
             # "top_p": 0.9,  
             "use_cache": True,
         }
-        generated = model.generate(
+        generated = base_model.generate(
             inputs=input_ids,
             attention_mask=attention_mask,
             **generation_config,
