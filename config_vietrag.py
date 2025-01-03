@@ -28,13 +28,13 @@ if not os.path.exists(output_dir):
     os.mkdir(output_dir)
 new_model = os.path.join(output_dir, "ckpt_end_training")
 
-data_file_path = '/mnt/md1/check_point_text_recognition/data_chatbot/data_vietrag7b_time_250102-103703.json'
+data_file_path = '/mnt/md1/check_point_text_recognition/data_chatbot/data_vietrag7b_time_250103-085816.json'
 
 if os.environ.get('IS_DOCKER') is not None:
     data_path = '/app/data/data_vietrag7b_time_241204-084854.json'
 
 #number of training epochs
-num_train_epochs = 5
+num_train_epochs = 4
 
 #enable fp16/bf16 training (set bf16 to True when using A100 GPU in google colab)
 fp16 = True

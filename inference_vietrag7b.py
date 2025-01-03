@@ -4,14 +4,14 @@ import torch
 
 # Định nghĩa đường dẫn đến mô hình đã fine-tune và mô hình gốc
 model_id = "llm4fun/vietrag-7b-v1.0"
-# lora_checkpoint_path = "/mnt/md1/check_point_text_recognition/ckpt_chatbot/241213_vietrag7b/checkpoint-1114"
+lora_checkpoint_path = "/mnt/md1/check_point_text_recognition/ckpt_chatbot/250102_vietrag7b/ckpt_end_training"
 
 # Tải tokenizer và mô hình gốc
 tokenizer = LlamaTokenizer.from_pretrained(model_id)
 tokenizer.pad_token = tokenizer.eos_token
 tokenizer.padding_side = "right"
 
-model = LlamaForCausalLM.from_pretrained(
+base_model = LlamaForCausalLM.from_pretrained(
     model_id,
     config=LlamaConfig.from_pretrained(model_id),
     torch_dtype=torch.bfloat16,
@@ -19,8 +19,11 @@ model = LlamaForCausalLM.from_pretrained(
 )
 
 # Tải mô hình đã fine-tune với LoRA
-# model = PeftModel.from_pretrained(model, lora_checkpoint_path)
+# Step 2: Load the fine-tuned LoRA model (saved from trainer.model.save_pretrained)
+model = PeftModel.from_pretrained(base_model, lora_checkpoint_path)
 
+# Step 3: Merge the LoRA weights with the base model
+model = model.merge_and_unload()
 # Đặt mô hình vào chế độ đánh giá
 model.eval()
 # Đảm bảo mô hình sử dụng GPU nếu có
