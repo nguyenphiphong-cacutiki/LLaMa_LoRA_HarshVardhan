@@ -4,7 +4,7 @@ import torch
 
 # Định nghĩa đường dẫn đến mô hình đã fine-tune và mô hình gốc
 model_id = "llm4fun/vietrag-7b-v1.0"
-# lora_checkpoint_path = "/mnt/md1/check_point_text_recognition/ckpt_chatbot/250102_vietrag7b/ckpt_end_training"
+lora_checkpoint_path = "/mnt/md1/check_point_text_recognition/ckpt_chatbot/250103_vietrag7b/ckpt_end_training"
 
 # Tải tokenizer và mô hình gốc
 tokenizer = LlamaTokenizer.from_pretrained(model_id)
@@ -20,12 +20,12 @@ base_model = LlamaForCausalLM.from_pretrained(
 
 # Tải mô hình đã fine-tune với LoRA
 # Step 2: Load the fine-tuned LoRA model (saved from trainer.model.save_pretrained)
-# model = PeftModel.from_pretrained(base_model, lora_checkpoint_path)
+model = PeftModel.from_pretrained(base_model, lora_checkpoint_path)
 
 # Step 3: Merge the LoRA weights with the base model
-# model = model.merge_and_unload()
+model = model.merge_and_unload()
 # Đặt mô hình vào chế độ đánh giá
-base_model.eval()
+model.eval()
 # Đảm bảo mô hình sử dụng GPU nếu có
 device = "cuda" if torch.cuda.is_available() else "cpu"
 # model.to(device)
@@ -47,7 +47,8 @@ def format_prompt_for_answer_task_base_model(question, context):
 
 
 def format_prompt_for_answer_task_finetuning_model(question, context):
-        instruction = 'You are now a dedicated assistant for TLU. Provide a detailed answer so user don’t need to search outside to understand the answer.'
+        instruction = 'You are now a dedicated assistant for TLU. Provide a detailed answer so user don’t need to search \
+        outside to understand the answer.'
         input = f"Dựa vào một số Tài liệu được cho dưới đây, trả lời câu hỏi ở cuối. nếu bạn thấy Tài liệu không liên quan đến \
         câu hỏi thì phải giải thích tại sao lại không thể trả lời.\n\n{context}\n\nQuestion: {question}"
         prompt_template = (
@@ -62,7 +63,7 @@ def format_prompt_for_answer_task_finetuning_model(question, context):
         return prompt
 # Hàm tạo văn bản từ mô hình
 def generate(question, context, max_new_tokens=620):
-    prompt = format_prompt_for_answer_task_base_model(question=question, context=context)
+    prompt = format_prompt_for_answer_task_finetuning_model(question=question, context=context)
     input_ids = tokenizer(prompt, return_tensors="pt")["input_ids"].to(device)
     # input_ids = tokenizer(prompt, return_tensors="pt")["input_ids"]
     attention_mask = (input_ids != tokenizer.pad_token_id).long()
@@ -76,7 +77,7 @@ def generate(question, context, max_new_tokens=620):
             # "top_p": 0.9,  
             "use_cache": True,
         }
-        generated = base_model.generate(
+        generated = model.generate(
             inputs=input_ids,
             attention_mask=attention_mask,
             **generation_config,
