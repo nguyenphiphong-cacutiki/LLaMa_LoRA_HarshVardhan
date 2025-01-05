@@ -20,10 +20,13 @@ base_model = LlamaForCausalLM.from_pretrained(
 
 # Tải mô hình đã fine-tune với LoRA
 # Step 2: Load the fine-tuned LoRA model (saved from trainer.model.save_pretrained)
+
 model = PeftModel.from_pretrained(base_model, lora_checkpoint_path)
 
 # Step 3: Merge the LoRA weights with the base model
+
 model = model.merge_and_unload()
+
 # Đặt mô hình vào chế độ đánh giá
 model.eval()
 # Đảm bảo mô hình sử dụng GPU nếu có
@@ -63,7 +66,7 @@ def format_prompt_for_answer_task_finetuning_model(question, context):
         return prompt
 # Hàm tạo văn bản từ mô hình
 def generate(question, context, max_new_tokens=620):
-    prompt = format_prompt_for_answer_task_finetuning_model(question=question, context=context)
+    prompt = format_prompt_for_answer_task_base_model(question=question, context=context)
     input_ids = tokenizer(prompt, return_tensors="pt")["input_ids"].to(device)
     # input_ids = tokenizer(prompt, return_tensors="pt")["input_ids"]
     attention_mask = (input_ids != tokenizer.pad_token_id).long()

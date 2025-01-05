@@ -18,8 +18,8 @@ accelerator = Accelerator()
 model_name = cfg.model_name
 # new_model = "Llama-2-7b-chat-finetune-qlora"
 # new_model = "/mnt/md1/check_point_text_recognition/ckpt_chatbot/checkpoint-53390"
-new_model = "/mnt/md1/check_point_text_recognition/ckpt_chatbot/241202_llama7bchathf/Llama-2-7b-chat-finetune-qlora"
-save_directory = '/mnt/md1/check_point_text_recognition/ckpt_chatbot/241202_llama7bchathf/push_hug_demo'
+new_model = "/mnt/md1/check_point_text_recognition/ckpt_chatbot/250102_vietrag7b/ckpt_end_training"
+save_directory = '/mnt/md1/check_point_text_recognition/ckpt_chatbot/250102_vietrag7b/push_hug_demo'
 # 3. Tokenizer and PEFT configuration
 #Load LLama tokenizer
 tokenizer = AutoTokenizer.from_pretrained(model_name,trust_remote_code = True)
@@ -53,7 +53,7 @@ model = model.merge_and_unload()
 model.save_pretrained(save_directory)
 tokenizer.save_pretrained(save_directory)
 
-repo_name = 'phongnp2010/chatbot-llama-7b-chathf'
+repo_name = 'phongnp2010/vietrag-finetuning'
 upload_folder(
     repo_id=repo_name,
     folder_path=save_directory,
